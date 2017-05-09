@@ -1,35 +1,32 @@
 'use strict'
 
 class Commands {
-  constructor(JSONBuilder) {
-    var builder = JSONBuilder
-    this.JSONrouter = [
+  constructor(builder) {
+    var self = this
+    this.controller = builder
+    this.router = [
       {
         str: "_{",
         func: function () {
-          builder.record.backlog.push("_{")
-          console.log(JSON.stringify(builder.record.backlog))
+          console.log("instantiate child object")
         }
       },
       {
         str: "_}",
         func: function () {
-          builder.record.backlog.push("_}")
-          console.log(JSON.stringify(builder.record.backlog))
+          console.log("return to parent object")
         }
       },
       {
         str: "_[",
         func: function () {
-          builder.record.backlog.push("_[")
-          console.log(JSON.stringify(builder.record.backlog))
+          console.log("instantiate array")
         }
       },
       {
         str: "_]",
         func: function () {
-          builder.record.backlog.push("_]")
-          console.log(JSON.stringify(builder.record.backlog))
+          console.log("close array")
         }
       },
       {

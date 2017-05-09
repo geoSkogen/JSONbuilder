@@ -4,20 +4,18 @@ var ObjectBuilder = require('./objectBuilder.js')
 var ArrayBuilder = require('./arrayBuilder.js')
 
 class JSONBuilder {
-  constructor (dataObj) {
+  constructor () {
     this.buildsObject = new ObjectBuilder()
     this.buildsArray = new ArrayBuilder()
-    this.dataObj = dataObj
     this.isKey = true;
     this.objectNest = [];
     this.allInts
     this.numStr
-    this.dataObj.backlog = []
+    this.backlog = []
   }
 }
 
 JSONBuilder.prototype.dataEntry = function (input, currentObj) {
-  this.dataObj.backlog.push(input)
   this.allInts = false;
   if (!this.isKey) {
     this.isNumeric(input)
