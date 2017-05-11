@@ -5,7 +5,7 @@ var JSONBuilder = require('./JSONBuilder.js')
 var DataObject = require('./dataObject.js')
 
 var dataObject = new DataObject()
-var builder = new JSONBuilder()
+var builder = new JSONBuilder(dataObject)
 var commands1 = new Commands(builder)
 var cli = new Cli(commands1)
 /*var rl = readline.createInterface({
@@ -18,8 +18,9 @@ var cli = new Cli(commands1)
 rl.question( prompt  + "\r\n", (answer) => {
   cli.JSCli(answer, dataObject)
 })*/
-var answers = ["key:", "_{", "key:", "val", "_}", "key:", "_[", '1','2','3','4','5', "_]","_end"]
+var answers = ['one','2','three','4','five','6']
 for (let i = 0; i < answers.length; i++) {
-  cli.JSCli(answers[i], dataObject)
+  cli.JSCli(answers[i])
 }
 console.log(cli.controller.backlog)
+console.log(JSON.stringify(cli.controller.dataObj))

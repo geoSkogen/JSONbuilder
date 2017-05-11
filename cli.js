@@ -23,7 +23,7 @@ class JSCli {
 }
 
 
-JSCli.prototype.JSCli = function (answer, dataObj) {
+JSCli.prototype.JSCli = function (answer) {
   this.controller.backlog.push(answer)
   if (this.commandStrings.indexOf(answer) != -1) {
     this.commandFuncs[this.commandStrings.indexOf(answer)]()
@@ -31,7 +31,7 @@ JSCli.prototype.JSCli = function (answer, dataObj) {
     //jscli should expect a specifically structured controller
     //for non command entry; it needs a .dataEntry method which accepts
     //the cli input string as an argument
-    this.controller.dataEntry(answer, dataObj)
+    this.controller.dataEntry(answer)
   }
 }
 

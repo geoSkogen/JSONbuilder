@@ -2,26 +2,25 @@
 
 class ObjectBuilder {
   constructor() {
-    this.isBuilding
     this.aKey = ""
     this.aValue = ""
     this.currentObj = {}
+    this.isBuilding = []
   }
 }
 
 ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumber, isNumChars) {
-  this.isBuilding = true
+  this.isBuilding.push(dataObj);
   this.currentObj = dataObj
   if (isKey) {
     this.aKey = string
   } else {
-    this.aValue = string
+    this.aValue = (isNumber)? Number(string) : string
     this.currentObj[this.aKey] = this.aValue
   }
 }
 
-ObjectBuilder.prototype.quit = function () {
-  isBuilding = false;
+ObjectBuilder.prototype.stopKeyValuePairs = function () {
 }
 
 module.exports = ObjectBuilder

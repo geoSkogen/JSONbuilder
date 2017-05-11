@@ -9,6 +9,11 @@ class Commands {
         str: "_{",
         func: function () {
           console.log("instantiate child object")
+          if (!this.controller.isKey) {
+            var oneBack = this.controller.backlog.length - 2
+            var lastString = this.controller.backlog[oneBack];
+            this.controller.dataEntry(lastString)
+          }
         }
       },
       {
@@ -21,6 +26,12 @@ class Commands {
         str: "_[",
         func: function () {
           console.log("instantiate array")
+          if (!this.controller.isKey) {
+            var oneBack = this.controller.backlog.length - 2
+            this.controller.buildsArray.start(oneBack)
+          } else {
+            console.log("this will create a syntax error; try another command")
+          }
         }
       },
       {
@@ -33,6 +44,7 @@ class Commands {
         str: "_end",
         func: function () {
           console.log("wrote file")
+          this.controller.buildsObject.stopKeyValuePairs()
         }
       }
     ]

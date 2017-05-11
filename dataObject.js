@@ -2,7 +2,6 @@
 
 class DataObject {
   constructor () {
-    this.backlog = []
   }
 }
 
