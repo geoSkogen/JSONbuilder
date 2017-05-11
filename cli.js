@@ -30,8 +30,10 @@ JSCli.prototype.JSCli = function (answer) {
   } else {
     //jscli should expect a specifically structured controller
     //for non command entry; it needs a .dataEntry method which accepts
-    //the cli input string as an argument
-    this.controller.dataEntry(answer)
+    //the cli input string as an argument, plus a Boolean value
+    this.controller.dataEntry(answer, false)
+    //passing false to dataEntry tells the controller to continue assigning values
+    //to keys in the current object 
   }
 }
 

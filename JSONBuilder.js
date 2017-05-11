@@ -7,20 +7,27 @@ class JSONBuilder {
   constructor (dataObj) {
     this.buildsObject = new ObjectBuilder()
     this.buildsArray = new ArrayBuilder()
-    this.isKey = true;
-    this.objectNest = []
+    this.isKey = true
+    this.lastKey= ""
     this.allInts
     this.numStr
     this.backlog = []
     this.dataObj = dataObj
     this.currentObj = dataObj
+    this.objectNest = [dataObj]
   }
 }
 
-JSONBuilder.prototype.dataEntry = function (input) {
+JSONBuilder.prototype.dataEntry = function (input, newChild) {
   this.allInts = false;
   if (!this.isKey) {
     this.isNumeric(input)
+    if (newChild) {
+      this.currentObj = this.currentObj[input] = {}
+      this.objectNest.push(this.currentObj)
+      this.isKey = true
+      return
+    }
   }
   this.buildsObject.keyValuePairs(input, this.currentObj, this.isKey, this.allInts, this.numStr)
   this.isKey = !this.isKey
@@ -57,6 +64,15 @@ JSONBuilder.prototype.isNumberString = function (string) {
     console.log('default to string')
     this.numStr = false;
   }
+}
+
+JSONBuilder.prototype.returnToParentObject = function () {
+  var oneBack
+  this.objectNest.pop()
+  oneBack = this.objectNest.length - 1
+  this.currentObj = this.objectNest[oneBack]
+  this.buildsObject.stopKeyValuePairs(this.currentObj)
+  this.isKey = true
 }
 
 

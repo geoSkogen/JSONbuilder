@@ -9,10 +9,14 @@ class Commands {
         str: "_{",
         func: function () {
           console.log("instantiate child object")
-          if (!this.controller.isKey) {
-            var oneBack = this.controller.backlog.length - 2
-            var lastString = this.controller.backlog[oneBack];
-            this.controller.dataEntry(lastString)
+          if (!self.controller.isKey) {
+            var oneBack = self.controller.backlog.length - 2
+            var lastString = self.controller.backlog[oneBack];
+            //passing true to dataEntry tells the controller to instantiate a new
+            //object, assign it to the last key entered, and set it to the current object
+            self.controller.dataEntry(lastString, true)
+          } else {
+            console.log("this will result in a syntax error; enter a key")
           }
         }
       },
@@ -20,17 +24,18 @@ class Commands {
         str: "_}",
         func: function () {
           console.log("return to parent object")
+          self.controller.returnToParentObject()
         }
       },
       {
         str: "_[",
         func: function () {
           console.log("instantiate array")
-          if (!this.controller.isKey) {
-            var oneBack = this.controller.backlog.length - 2
-            this.controller.buildsArray.start(oneBack)
+          if (!self.controller.isKey) {
+            var oneBack = self.controller.backlog.length - 2
+            self.controller.buildsArray.start(oneBack)
           } else {
-            console.log("this will create a syntax error; try another command")
+            console.log("this will result in a syntax error; enter a key")
           }
         }
       },
@@ -44,7 +49,7 @@ class Commands {
         str: "_end",
         func: function () {
           console.log("wrote file")
-          this.controller.buildsObject.stopKeyValuePairs()
+          self.controller.buildsObject.stopKeyValuePairs()
         }
       }
     ]

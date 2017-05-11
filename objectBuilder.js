@@ -10,7 +10,10 @@ class ObjectBuilder {
 }
 
 ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumber, isNumChars) {
-  this.isBuilding.push(dataObj);
+  var top = this.isBuilding.length - 1
+  if (this.isBuilding[top] != dataObj) {
+    this.isBuilding.push(dataObj)
+  }
   this.currentObj = dataObj
   if (isKey) {
     this.aKey = string
@@ -20,7 +23,11 @@ ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumb
   }
 }
 
-ObjectBuilder.prototype.stopKeyValuePairs = function () {
+ObjectBuilder.prototype.stopKeyValuePairs = function (parentObj) {
+  this.aKey = ""
+  this.aValue = ""
+  this.isBuilding.pop()
+  this.currentObj = parentObj
 }
 
 module.exports = ObjectBuilder
