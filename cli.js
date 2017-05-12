@@ -1,6 +1,6 @@
 'use strict'
 
-var readline = require('readline')
+//var readline = require('readline')
 
 
 class JSCli {
@@ -15,10 +15,10 @@ class JSCli {
       this.commandStrings[i] = this.commands[i].str
       this.commandFuncs[i] = this.commands[i].func
     }
-    this.rl = readline.createInterface({
+    /*this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
-    })
+    })*/
   }
 }
 
