@@ -33,7 +33,7 @@ JSCli.prototype.JSCli = function (answer) {
     //the cli input string as an argument, plus a Boolean value
     this.controller.dataEntry(answer, false)
     //passing false to dataEntry tells the controller to continue assigning values
-    //to keys in the current object 
+    //to keys in the current object
   }
 }
 

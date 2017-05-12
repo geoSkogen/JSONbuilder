@@ -18,7 +18,7 @@ var cli = new Cli(commands1)
 rl.question( prompt  + "\r\n", (answer) => {
   cli.JSCli(answer, dataObject)
 })*/
-var answers = ['one','_{','1','two','3','four','_}','two','[this,will,be,an,array,tomorrow]']
+var answers = ['one','_{','1','two','3','four','_}','two','_[','1','2','3','4','5','6','7','8','9','_]','three','_{','hello','JSONbuilder','_}']
 for (let i = 0; i < answers.length; i++) {
   cli.JSCli(answers[i])
 }

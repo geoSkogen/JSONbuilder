@@ -10,10 +10,10 @@ class Commands {
         func: function () {
           console.log("instantiate child object")
           if (!self.controller.isKey) {
-            var oneBack = self.controller.backlog.length - 2
-            var lastString = self.controller.backlog[oneBack];
-            //passing true to dataEntry tells the controller to instantiate a new
-            //object, assign it to the last key entered, and set it to the current object
+            var lastKey = self.controller.backlog.length - 2
+            var lastString = self.controller.backlog[lastKey];
+            //passing true to dataEntry tells the controller
+            //to instantiate a new object,
             self.controller.dataEntry(lastString, true)
           } else {
             console.log("this will result in a syntax error; enter a key")
@@ -23,7 +23,7 @@ class Commands {
       {
         str: "_}",
         func: function () {
-          console.log("return to parent object")
+          console.log("close child object; return to parent object")
           self.controller.returnToParentObject()
         }
       },
@@ -32,8 +32,10 @@ class Commands {
         func: function () {
           console.log("instantiate array")
           if (!self.controller.isKey) {
-            var oneBack = self.controller.backlog.length - 2
-            self.controller.buildsArray.start(oneBack)
+            var lastKey = self.controller.backlog.length - 2
+            var lastString = self.controller.backlog[lastKey]
+            self.controller.buildsArray.isActive = true
+            self.controller.dataEntry(lastString, true)
           } else {
             console.log("this will result in a syntax error; enter a key")
           }
@@ -42,7 +44,8 @@ class Commands {
       {
         str: "_]",
         func: function () {
-          console.log("close array")
+          console.log("close array; return to parent object")
+          self.controller.returnToParentObject()
         }
       },
       {

@@ -5,10 +5,12 @@ var ArrayBuilder = require('./arrayBuilder.js')
 
 class JSONBuilder {
   constructor (dataObj) {
-    this.buildsObject = new ObjectBuilder()
+    this.buildsObject = new ObjectBuilder(dataObj)
     this.buildsArray = new ArrayBuilder()
     this.isKey = true
+    this.buildsArray.isActive = false
     this.lastKey= ""
+    this.lastObj = {}
     this.allInts
     this.numStr
     this.backlog = []
@@ -20,18 +22,30 @@ class JSONBuilder {
 
 JSONBuilder.prototype.dataEntry = function (input, newChild) {
   this.allInts = false;
-  if (!this.isKey) {
+  if (this.buildsArray.isActive) {
+    this.isKey = false
     this.isNumeric(input)
     if (newChild) {
-      this.currentObj = this.currentObj[input] = {}
+      this.currentObj = this.currentObj[input] = []
       this.objectNest.push(this.currentObj)
-      this.isKey = true
       return
     }
+    this.buildsArray.enterValuesOnly(input, this.currentObj, this.allInts, this.numStr)
+  } else {
+    if (!this.isKey) {
+      this.isNumeric(input)
+      if (newChild) {
+        this.currentObj = this.currentObj[input] = {}
+        this.objectNest.push(this.currentObj)
+        this.isKey = true
+        return
+      }
+    }
+    this.buildsObject.keyValuePairs(input, this.currentObj, this.isKey, this.allInts, this.numStr)
+    this.isKey = !this.isKey
   }
-  this.buildsObject.keyValuePairs(input, this.currentObj, this.isKey, this.allInts, this.numStr)
-  this.isKey = !this.isKey
 }
+
 
 JSONBuilder.prototype.isNumeric = function (string) {
   for (let i = 0; i < string.length; i++) {
@@ -67,11 +81,20 @@ JSONBuilder.prototype.isNumberString = function (string) {
 }
 
 JSONBuilder.prototype.returnToParentObject = function () {
-  var oneBack
-  this.objectNest.pop()
-  oneBack = this.objectNest.length - 1
-  this.currentObj = this.objectNest[oneBack]
-  this.buildsObject.stopKeyValuePairs(this.currentObj)
+  var parentIndex
+  var testObj
+  this.lastObj = this.objectNest.pop()
+  parentIndex = this.objectNest.length - 1
+  this.currentObj = this.objectNest[parentIndex]
+  if (!this.buildsArray.isActive) {
+    this.buildsObject.stopKeyValuePairs(this.currentObj)
+  }
+  testObj = this.currentObj
+  if (Array.isArray(testObj)) {
+    this.buildsArray.isActive = true
+  } else {
+    this.buildsArray.isActive = false
+  }
   this.isKey = true
 }
 

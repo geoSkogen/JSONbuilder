@@ -1,11 +1,11 @@
 'use strict'
 
 class ObjectBuilder {
-  constructor() {
+  constructor(dataObj) {
     this.aKey = ""
     this.aValue = ""
-    this.currentObj = {}
-    this.isBuilding = []
+    this.currentObj = {dataObj}
+    this.isBuilding = [dataObj]
   }
 }
 
