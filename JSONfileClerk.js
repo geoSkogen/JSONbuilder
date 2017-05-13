@@ -10,7 +10,7 @@ class JSONfileClerk {
 
 JSONfileClerk.prototype.write = function (object, filename) {
   var string = JSON.stringify(object)
-  fs.writeFile('./' + filename + '.json', string, function(err) {
+  this.fs.writeFile('./' + filename + '.json', string, function(err) {
     if (err) {
       console.log(err);
     }

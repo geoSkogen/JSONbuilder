@@ -51,10 +51,14 @@ JSONBuilder.prototype.dataEntry = function (input, newChild) {
 
 
 JSONBuilder.prototype.isNumeric = function (string) {
+  var isIntCount = 0
   for (let i = 0; i < string.length; i++) {
     if (Number(string.charAt(i))) {
-      this.allInts = true;
+      isIntCount++
     }
+  }
+  if (isIntCount === string.length) {
+    this.allInts = true
   }
   if (this.allInts) {
     console.log('allInts')
@@ -66,16 +70,20 @@ JSONBuilder.prototype.isNumeric = function (string) {
 }
 
 JSONBuilder.prototype.isNumberString = function (string) {
-  if (string.charAt(0) === "\"") {
+  var isIntCount = 0
+  if (string.charAt(0) === "\'") {
     for (let i = 1; i < string.length; i++) {
       if (Number(string.charAt(i))) {
-        this.numStr = true;
+        isIntCount++
       }
+    }
+    if (isIntCount === string.length - 1) {
+      this.numStr = true
     }
     if (this.numStr) {
       console.log("number will be parsed as a string")
     } else {
-      console.log("random garbage")
+      console.log("noise")
     }
   } else {
     console.log('default to string')

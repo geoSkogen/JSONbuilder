@@ -2,7 +2,6 @@
 
 //var readline = require('readline')
 
-
 class JSCli {
   constructor (commands) {
     var self = this

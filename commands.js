@@ -77,7 +77,7 @@ class Commands {
         str: "filename",
         func: function (string) {
           console.log("filename: " + string + ".json")
-          
+          self.controller.servesFiles.write(self.controller.dataObj, string)
         }
       }
     ]
