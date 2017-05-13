@@ -2,13 +2,14 @@
 
 var ObjectBuilder = require('./objectBuilder.js')
 var ArrayBuilder = require('./arrayBuilder.js')
+var JSONfileClerk = require('./JSONfileClerk.js')
 
 class JSONBuilder {
   constructor (dataObj) {
     this.buildsObject = new ObjectBuilder(dataObj)
     this.buildsArray = new ArrayBuilder()
+    this.servesFiles = new JSONfileClerk()
     this.isKey = true
-    this.buildsArray.isActive = false
     this.lastKey= ""
     this.lastObj = {}
     this.allInts
@@ -17,6 +18,8 @@ class JSONBuilder {
     this.dataObj = dataObj
     this.currentObj = dataObj
     this.objectNest = [dataObj]
+    this.rlClose = false
+    this.promptedBy = ""
   }
 }
 
@@ -98,5 +101,8 @@ JSONBuilder.prototype.returnToParentObject = function () {
   this.isKey = true
 }
 
+JSONBuilder.prototype.promptedEntry = function (string) {
+  console.log('filename ' + string)
+}
 
 module.exports = JSONBuilder

@@ -55,7 +55,7 @@ class Commands {
             console.log("close array; return to parent object")
             self.controller.returnToParentObject()
           } else {
-            console.log("no array has been instantiated; enter a" + datum)
+            console.log("no array has been instantiated; enter a " + datum)
           }
         }
       },
@@ -64,7 +64,20 @@ class Commands {
         func: function () {
           console.log("command backlog: " + self.controller.backlog)
           console.log("wrote to file: " + JSON.stringify(self.controller.dataObj))
+          console.log("enter filename -- without extension; all files will have .json extension")
           self.controller.buildsObject.stopKeyValuePairs()
+          self.controller.promptedBy = "filename"
+          //self.controller.rlClose = true
+        }
+      }
+    ]
+    this.prompter =
+    [
+      {
+        str: "filename",
+        func: function (string) {
+          console.log("filename: " + string + ".json")
+          
         }
       }
     ]

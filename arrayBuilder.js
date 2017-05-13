@@ -5,7 +5,7 @@ class ArrayBuilder {
     this.currentObj = []
     this.currentInput
     this.isBuilding = []
-    this.isActive
+    this.isActive = false
   }
 }
 

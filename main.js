@@ -26,6 +26,10 @@ function initInput() {
       dumpData()
     } else {
       cli.JSCli(answer)
+      if (cli.controller.rlClose) {
+        rl.close()
+        return
+      }
       initInput()
     }
   })
