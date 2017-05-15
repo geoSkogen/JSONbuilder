@@ -41,6 +41,7 @@ function dumpData() {
   console.log(JSON.stringify(cli.controller.objectNest))
 }
 
+console.log("type _help to view commands & conventions")
 initInput()
 
 /*

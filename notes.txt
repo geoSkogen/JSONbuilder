@@ -1,0 +1,53 @@
+for future:
+
+create functionality for JSONbuilder to completely edit JSON docs by 
+co-ing through them (change object); command prompt example:
+
+>
+_open example.json
+rootObject>
+_co childObject.dataStructure.dataArray
+rootObject.childObject.dataStructure.dataArray>>>>
+_}
+rootObject.childObject.dataStructure>>>
+_}2
+rootObject>
+_keys
+childObject
+siblingObject
+fullOfSurprises
+rootObject>
+_keys fullOfSurprises
+doctor
+sprugbacher's
+curious 
+cabinet
+ofMany
+things
+rootObject>
+_co fullOfSurprises.cabinet
+rootObject.fullOfSurprises.cabinet>>>
+_keys
+wonderArray
+rootObject.fullOfSurprises.cabinet>>>
+_co wonderArray
+rootObject.fullOfSurprises.cabinet.wonderArray>>>>
+BTW
+this
+is
+the
+best
+party
+I've
+been
+to
+_]
+rootObject.fullOfSurprises.cabinet>>>
+_end
+
+
+
+create functionality for JSONbuilder to read specially formatted csv file 
+--exported from excel, eg--and turn it into JSON; the fuction should 
+accept a file and a structure statement;
+
