@@ -3,12 +3,14 @@
 var ObjectBuilder = require('./objectBuilder.js')
 var ArrayBuilder = require('./arrayBuilder.js')
 var JSONfileClerk = require('./JSONfileClerk.js')
+var Helper = require('./helper')
 
 class JSONBuilder {
   constructor (dataObj) {
     this.buildsObject = new ObjectBuilder(dataObj)
     this.buildsArray = new ArrayBuilder()
     this.servesFiles = new JSONfileClerk()
+    this.getsHelp = new Helper()
     this.isKey = true
     this.lastKey= ""
     this.lastObj = {}

@@ -9,7 +9,7 @@ class Commands {
         str: "_{",
         func: function () {
           if (!self.controller.isKey) {
-            console.log("instantiate child object")
+            console.log("instantiates child object")
             var lastKey = self.controller.backlog.length - 2
             var lastString = self.controller.backlog[lastKey];
             //passing true to dataEntry tells the controller
@@ -24,7 +24,7 @@ class Commands {
         str: "_}",
         func: function () {
           if (self.controller.isKey && self.controller.objectNest.length > 1) {
-            console.log("close child object; return to parent object")
+            console.log("closes child object; returns to parent object")
             self.controller.returnToParentObject()
           } else if (!self.controller.isKey) {
             console.log("this will result in a syntax error; enter a value")
@@ -37,7 +37,7 @@ class Commands {
         str: "_[",
         func: function () {
           if (!self.controller.isKey) {
-            console.log("instantiate child array")
+            console.log("instantiates child array")
             var lastKey = self.controller.backlog.length - 2
             var lastString = self.controller.backlog[lastKey]
             self.controller.buildsArray.isActive = true
@@ -52,7 +52,7 @@ class Commands {
         func: function () {
           var datum = (self.controller.isKey) ? "key" : "value"
           if (self.controller.buildsArray.isActive) {
-            console.log("close array; return to parent object")
+            console.log("closes array; returns to parent object")
             self.controller.returnToParentObject()
           } else {
             console.log("no array has been instantiated; enter a " + datum)
@@ -73,6 +73,7 @@ class Commands {
       {
         str: "_help",
         func: function () {
+          /*
           console.log("JSONbuilder opens in the root JSON object")
           console.log("the first line is a key")
           console.log("the next line is that key's value")
@@ -84,13 +85,18 @@ class Commands {
           console.log("set new directory path for current file; data entry example: ../newdir")
           console.log("command: _end")
           console.log("terminates data entry, asks for file name; data entry example: newfile")
+          console.log("command: _exit")
+          console.log("exits the JSON builder without creating a file; you return to your shell")
           console.log("command: _{ ")
           console.log("starts a new (child) object; data entry commences with key line, then value line")
+          console.log("command: _}")
+          console.log("closes child object and resumes key/value line data entry on parent object")
           console.log("command: _[")
           console.log("starts a new (child) array; data entry is repeating indexed values")
-          console.log("")
-
-
+          console.log("command: _]")
+          console.log("closes child array and resumes key/value line data entry on parent object")
+          */
+          self.controller.getsHelp.getHelp()
         }
       }
     ]
@@ -99,7 +105,7 @@ class Commands {
       {
         str: "filename",
         func: function (string) {
-          console.log("filename: " + string + ".json")
+          console.log("wrote: ./product/" + string + ".json")
           self.controller.servesFiles.write(self.controller.dataObj, string)
         }
       }
