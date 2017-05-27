@@ -6,6 +6,7 @@ class Helper {
       "JSONbuilder opens in the root JSON object",
       "the first line is a key",
       "the next line is that key's value",
+      "(parse conventions: 99 - number; \"99 - string(i.e.,\"99\"); 99mm - string)",
       "and so it repeats, until you type _end",
       "JSONbuilder will then ask you for a file name",
       "--do not type file extensions; all files are .json by default--",
@@ -16,6 +17,8 @@ class Helper {
       "terminates data entry, asks for file name; data entry example: newfile",
       "command: _exit",
       "exits the JSON builder without creating a file; you return to your shell",
+      "command: _keys",
+      "lists all keys in the current object; denotes if key is an array[] or object{}",
       "command: _{ ",
       "starts a new (child) object; data entry commences with key line, then value line",
       "command: _}",
@@ -25,18 +28,14 @@ class Helper {
       "command: _]",
       "closes child array and resumes key/value line data entry on parent object"
     ]
-    this.introLenth = 6
   }
 }
 
 Helper.prototype.getHelp = function () {
   var lineArr = this.lines
-  var whereCommandsBegin = this.introLength
   for (var i = 0; i < lineArr.length; i++) {
-    if (i >= whereCommandsBegin) {
-      console.log("+")
+    if (i >= 6 && i%2 != 0) {
       console.log(lineArr[i] + "\r\n")
-      console.log("+")
     } else {
       console.log(lineArr[i])
     }

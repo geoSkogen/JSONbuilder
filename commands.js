@@ -73,30 +73,20 @@ class Commands {
       {
         str: "_help",
         func: function () {
-          /*
-          console.log("JSONbuilder opens in the root JSON object")
-          console.log("the first line is a key")
-          console.log("the next line is that key's value")
-          console.log("and so it repeats, until you type _end")
-          console.log("JSONbuilder will then ask you for a file name")
-          console.log("--do not type file extensions; all files are .json by default--")
-          console.log("JSONbuiilder saves the file in the /product directory")
-          console.log("command: _path")
-          console.log("set new directory path for current file; data entry example: ../newdir")
-          console.log("command: _end")
-          console.log("terminates data entry, asks for file name; data entry example: newfile")
-          console.log("command: _exit")
-          console.log("exits the JSON builder without creating a file; you return to your shell")
-          console.log("command: _{ ")
-          console.log("starts a new (child) object; data entry commences with key line, then value line")
-          console.log("command: _}")
-          console.log("closes child object and resumes key/value line data entry on parent object")
-          console.log("command: _[")
-          console.log("starts a new (child) array; data entry is repeating indexed values")
-          console.log("command: _]")
-          console.log("closes child array and resumes key/value line data entry on parent object")
-          */
           self.controller.getsHelp.getHelp()
+        }
+      },
+      {
+        str: "_keys",
+        func: function () {
+          console.log(self.controller.getKeyDataTypes())
+        }
+      },
+      {
+        str: "_key",
+        func: function () {
+          console.log("enter key")
+          self.controller.promptedBy = "keyname"
         }
       }
     ]
@@ -107,6 +97,12 @@ class Commands {
         func: function (string) {
           console.log("wrote: ./product/" + string + ".json")
           self.controller.servesFiles.write(self.controller.dataObj, string)
+        }
+      },
+      {
+        str: "keyname",
+        func: function (string) {
+          self.controller.keyChange(string)
         }
       }
     ]

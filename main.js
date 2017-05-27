@@ -41,6 +41,7 @@ function dumpData() {
   console.log(JSON.stringify(cli.controller.objectNest))
 }
 
+console.log("JSON Builder 0.1.0 by geoSkogen")
 console.log("type _help to view commands & conventions")
 initInput()
 

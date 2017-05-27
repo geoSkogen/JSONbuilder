@@ -9,7 +9,7 @@ class ObjectBuilder {
   }
 }
 
-ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumber, isNumChars) {
+ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumber, isNumChars, ifBool) {
   var top = this.isBuilding.length - 1
   if (this.isBuilding[top] != dataObj) {
     this.isBuilding.push(dataObj)
@@ -19,6 +19,11 @@ ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumb
     this.aKey = string
   } else {
     this.aValue = (isNumber)? Number(string) : string
+      if (isNumChars) {
+        this.aValue = string.slice(1,string.length-1)
+      } else if (ifBool.isBool) {
+        this.aValue = ifBool.boolVal
+      }
     this.currentObj[this.aKey] = this.aValue
   }
 }
