@@ -20,7 +20,7 @@ ObjectBuilder.prototype.keyValuePairs = function (string, dataObj, isKey, isNumb
   } else {
     this.aValue = (isNumber)? Number(string) : string
       if (isNumChars) {
-        this.aValue = string.slice(1,string.length-1)
+        this.aValue = string.slice(1,string.length)
       } else if (ifBool.isBool) {
         this.aValue = ifBool.boolVal
       }

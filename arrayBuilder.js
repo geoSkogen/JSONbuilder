@@ -14,7 +14,7 @@ ArrayBuilder.prototype.enterValuesOnly = function (string, dataObj, isNum, isNum
   this.currentObj = dataObj
   this.currentInput = (isNum) ? Number(string) : string
   if (isNumChars) {
-    this.currentInput = string.slice(1,string.length-1)
+    this.currentInput = string.slice(1,string.length)
   } else if (ifBool.isBool) {
     this.currentInput = ifBool.boolVal
   }

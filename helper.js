@@ -18,7 +18,7 @@ class Helper {
       "command: _exit",
       "exits the JSON builder without creating a file; you return to your shell",
       "command: _keys",
-      "lists all keys in the current object; denotes if key is an array[] or object{}",
+      "lists all keys in the current object; denotes if key is an array[], object{}, \r\n string $, number #, or boolean||",
       "command: _{ ",
       "starts a new (child) object; data entry commences with key line, then value line",
       "command: _}",
