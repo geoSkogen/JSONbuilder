@@ -88,14 +88,29 @@ class Commands {
           console.log("enter key")
           self.controller.promptedBy = "keyname"
         }
+      },
+      {
+        str: "_file",
+        func: function () {
+          console.log("enter path for file to read")
+          self.controller.promptedBy = "readfilepath"
+        }
+      },
+      {
+        str: "_path",
+        func: function () {
+          console.log("enter new path for current file destination")
+          self.controller.promptedBy = "writefilepath"
+        }
       }
+
+
     ]
     this.prompter =
     [
       {
         str: "filename",
         func: function (string) {
-          console.log("wrote: ./product/" + string + ".json")
           self.controller.servesFiles.write(self.controller.dataObj, string)
         }
       },
@@ -103,6 +118,18 @@ class Commands {
         str: "keyname",
         func: function (string) {
           self.controller.keyChange(string)
+        }
+      },
+      {
+        str: "readfilepath",
+        func: function (string) {
+          self.controller.loadObj(string)
+        }
+      },
+      {
+        str: "writefilepath",
+        func: function (string) {
+          self.controller.servesFiles.setPath(string)
         }
       }
     ]

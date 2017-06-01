@@ -3,14 +3,17 @@
 var ObjectBuilder = require('./objectBuilder.js')
 var ArrayBuilder = require('./arrayBuilder.js')
 var JSONfileClerk = require('./JSONfileClerk.js')
-var Helper = require('./helper')
+var Helper = require('./helper.js')
+var KeyValidator = require('./keyValidator.js')
 
 class JSONBuilder {
   constructor (dataObj) {
+    var self = this
     this.buildsObject = new ObjectBuilder(dataObj)
     this.buildsArray = new ArrayBuilder()
-    this.servesFiles = new JSONfileClerk()
+    this.servesFiles = new JSONfileClerk(self)
     this.getsHelp = new Helper()
+    this.validatesKeys = new KeyValidator()
     this.isKey = true
     this.lastKey= ""
     this.lastObj = {}
@@ -52,8 +55,12 @@ JSONBuilder.prototype.dataEntry = function (input, newChild) {
         return
       }
     }
-    this.buildsObject.keyValuePairs(input, this.currentObj, this.isKey, this.allInts, this.numStr, this.ifBool)
-    this.isKey = !this.isKey
+    if (this.validatesKeys.isValidKey(input) || !this.isKey) {
+      this.buildsObject.keyValuePairs(input, this.currentObj, this.isKey, this.allInts, this.numStr, this.ifBool)
+      this.isKey = !this.isKey
+    } else {
+      console.log("key contains invalid characters or reserved words, try another key")
+    }
   }
 }
 
@@ -134,6 +141,9 @@ JSONBuilder.prototype.returnToParentObject = function () {
     this.buildsArray.isActive = false
   }
   this.isKey = true
+  if (this.objectNest.length == 1) {
+    this.keyToCurrent = "(root JSON object)"
+  }
 }
 
 JSONBuilder.prototype.promptedEntry = function (string) {
@@ -176,18 +186,37 @@ JSONBuilder.prototype.getKeyDataTypes = function () {
 }
 
 JSONBuilder.prototype.keyChange = function (string) {
+  var self = this
   this.getKeyDataTypes()
   var keyIndex = this.currentKeys.indexOf(string)
+  var currentType = ""
   if (keyIndex != -1) {
+    currentType = this.currentDataTypes[keyIndex]
     console.log(string + " makes your teeth go gray")
-    if (this.currentDataTypes[keyIndex] == "object" || this.currentDataTypes[keyIndex] == "array") {
-      console.log("editing child " + this.currentDataTypes[keyIndex] + string + " in " + this.keyToCurrent)
+    if (currentType == "object" || currentType == "array") {
+      this.keyToCurrent = string
+      console.log("editing child " + currentType + " " + string + " in " + this.keyToCurrent)
+      if (currentType == "array") {
+        self.currentObj = self.currentObj[self.keyToCurrent]
+        self.objectNest.push(self.currentObj[self.keyToCurrent])
+        self.buildsArray.isActive = true
+      } else {
+        self.currentObj = self.currentObj[self.keyToCurrent]
+        self.objectNest.push(self.currentObj[self.keyToCurrent])
+      }
     } else {
-      console.log("overwriting " + this.currentDataTypes[keyIndex] + string  + " in " + this.keyToCurrent)
+      console.log("overwriting " + currentType + " " + string  + " in " + this.keyToCurrent)
+      this.isKey = true
+      this.dataEntry(string, false)
     }
   } else {
     console.log(string + " is not a key in the current scope")
   }
 }
+
+JSONBuilder.prototype.loadObj = function (string) {
+  this.servesFiles.read(string)
+}
+
 
 module.exports = JSONBuilder

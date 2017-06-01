@@ -35,6 +35,7 @@ JSCli.prototype.JSCli = function (answer) {
     this.commandFuncs[this.commandStrings.indexOf(answer)]()
   } else if (this.promptStrings.indexOf(this.controller.promptedBy) != -1) {
     this.promptFuncs[this.promptStrings.indexOf(this.controller.promptedBy)](answer)
+    this.controller.promptedBy = null
   } else {
     //jscli should expect a specifically structured controller
     //for non command entry; it needs a .dataEntry method which accepts

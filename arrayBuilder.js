@@ -10,7 +10,7 @@ class ArrayBuilder {
 }
 
 ArrayBuilder.prototype.enterValuesOnly = function (string, dataObj, isNum, isNumChars, ifBool) {
-  console.log("array start")
+  console.log("array element")
   this.currentObj = dataObj
   this.currentInput = (isNum) ? Number(string) : string
   if (isNumChars) {
