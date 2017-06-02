@@ -24,7 +24,9 @@ class JSONBuilder {
     this.dataObj = dataObj
     this.currentObj = dataObj
     this.objectNest = [dataObj]
-    this.keyToCurrent = "(root JSON object)"
+    this.keyToCurrent = "rootObject"
+    this.keyToParent = "rootObject"
+    this.keyNest = [this.keyToCurrent]
     this.currentKeys = []
     this.currentDataTypes = []
     this.rlClose = false
@@ -41,6 +43,7 @@ JSONBuilder.prototype.dataEntry = function (input, newChild) {
     if (newChild) {
       this.currentObj = this.currentObj[input] = []
       this.objectNest.push(this.currentObj)
+      this.keyNest.push(input)
       return
     }
     this.buildsArray.enterValuesOnly(input, this.currentObj, this.allInts, this.numStr, this.ifBool)
@@ -51,6 +54,7 @@ JSONBuilder.prototype.dataEntry = function (input, newChild) {
       if (newChild) {
         this.currentObj = this.currentObj[input] = {}
         this.objectNest.push(this.currentObj)
+        this.keyNest.push(input)
         this.isKey = true
         return
       }
@@ -83,8 +87,10 @@ JSONBuilder.prototype.isBoolean = function (string) {
 JSONBuilder.prototype.isNumeric = function (string) {
   var isIntCount = 0
   for (let i = 0; i < string.length; i++) {
-    if (Number(string.charAt(i)) || string.charAt(i) == ".") {
+    if (Number(string.charAt(i)) || string.charAt(i) == "." || string.charAt(i) == "0") {
       isIntCount++
+      //find out where this could overload javaScript number object and set
+      //some parameters and overflow catch--how big/small can JS numbers get?
     }
   }
   if (isIntCount === string.length) {
@@ -141,9 +147,8 @@ JSONBuilder.prototype.returnToParentObject = function () {
     this.buildsArray.isActive = false
   }
   this.isKey = true
-  if (this.objectNest.length == 1) {
-    this.keyToCurrent = "(root JSON object)"
-  }
+  this.keyToCurrent = this.keyToParent
+  this.keyNest.pop()
 }
 
 JSONBuilder.prototype.promptedEntry = function (string) {
@@ -153,10 +158,10 @@ JSONBuilder.prototype.promptedEntry = function (string) {
 JSONBuilder.prototype.getKeyDataTypes = function () {
   var self = this
   var subKeyArr = []
-  var keyArr = Object.keys(this.currentObj)
   var dataTypeArr = []
   var newKeyArr = []
-
+  if (Object.keys(self.currentObj)) {
+  var keyArr = Object.keys(self.currentObj)
   for (var i = 0; i < keyArr.length; i++) {
     if (typeof self.currentObj[keyArr[i]] == "object") {
       if (self.currentObj[keyArr[i]].length) {
@@ -169,9 +174,9 @@ JSONBuilder.prototype.getKeyDataTypes = function () {
     } else {
       dataTypeArr.push(typeof self.currentObj[keyArr[i]])
       if (dataTypeArr[dataTypeArr.length-1] == "string") {
-        newKeyArr[i] = keyArr[i] + " $"
+        newKeyArr[i] = keyArr[i] + " \" \" "
       } else if (dataTypeArr[dataTypeArr.length-1] == "number") {
-        newKeyArr[i] = keyArr[i] + " #"
+        newKeyArr[i] = keyArr[i] + " 0.0"
       } else if (dataTypeArr[dataTypeArr.length-1] == "boolean") {
         newKeyArr[i] = keyArr[i] + "||"
       } else {
@@ -183,6 +188,7 @@ JSONBuilder.prototype.getKeyDataTypes = function () {
   this.currentKeys = keyArr
   this.currentDataTypes = dataTypeArr
   return newKeyArr
+} else { console.log("error unknown: " + self.keyNest)}
 }
 
 JSONBuilder.prototype.keyChange = function (string) {
@@ -194,8 +200,9 @@ JSONBuilder.prototype.keyChange = function (string) {
     currentType = this.currentDataTypes[keyIndex]
     console.log(string + " makes your teeth go gray")
     if (currentType == "object" || currentType == "array") {
+      this.keyToParent = this.keyToCurrent
       this.keyToCurrent = string
-      console.log("editing child " + currentType + " " + string + " in " + this.keyToCurrent)
+      console.log("editing child " + currentType + " " + string + " in " + this.keyToParent)
       if (currentType == "array") {
         self.currentObj = self.currentObj[self.keyToCurrent]
         self.objectNest.push(self.currentObj[self.keyToCurrent])

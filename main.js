@@ -1,10 +1,10 @@
 'use strict'
 var readline = require('readline')
 
-var Commands = require('./commands.js')
-var Cli = require('./cli.js')
-var JSONBuilder = require('./JSONBuilder.js')
-var DataObject = require('./dataObject.js')
+var Commands = require('./app/commands.js')
+var Cli = require('./app/cli.js')
+var JSONBuilder = require('./app/JSONBuilder.js')
+var DataObject = require('./app/dataObject.js')
 
 var dataObject = new DataObject()
 var builder = new JSONBuilder(dataObject)
