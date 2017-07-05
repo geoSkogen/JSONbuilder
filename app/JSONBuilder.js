@@ -109,7 +109,7 @@ JSONBuilder.prototype.isNumeric = function (string) {
 
 JSONBuilder.prototype.isNumberString = function (string) {
   var isIntCount = 0
-  if (string.charAt(0) === "\"") {
+  if (string.charAt(0) === "\'") {
     for (let i = 1; i < string.length; i++) {
       if (Number(string.charAt(i)) || string.charAt(i) == ".") {
         isIntCount++
