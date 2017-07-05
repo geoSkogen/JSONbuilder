@@ -7,4 +7,4 @@ writes JSON so you don't have to
 ##### git clone https://github.com/geoSkogen/JSONbuilder.git
 ##### cd JSONbuilder
 ##### npm install
-### to run JSONbuilder type 'npm start' or 'node main'
+### to run JSONbuilder type 'npm run buildJSON' or 'node main'

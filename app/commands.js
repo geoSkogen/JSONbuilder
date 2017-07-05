@@ -102,6 +102,13 @@ class Commands {
           console.log("enter new path for current file destination")
           self.controller.promptedBy = "writefilepath"
         }
+      },
+      {
+        str: "_new",
+        func: function () {
+          console.log("created new root data object; overwrote old root data object")
+          self.controller.promptedBy = "writefilepath"
+        }
       }
 
 
